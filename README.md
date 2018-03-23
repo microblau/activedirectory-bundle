@@ -14,7 +14,7 @@ Configuring Active Directory Bundle is really easy. Let's get started.
 Install using composer:
 
 ```bash
-composer config repositories.repo-name vcs ssh://git@gitlab.com:22/xrow-shared/activedirectory-bundle.git
+composer config repositories.xrow/activedirectory-bundle vcs ssh://git@gitlab.com:22/xrow-shared/activedirectory-bundle.git
 composer require xrow/activedirectory-bundle
 ```
 
