@@ -102,7 +102,7 @@ class Client implements ClientInterface
         }
         if ($this->logger)
             $this->logger->info("Authentication succeeded for user: '$username'");
-        $user = $provider->search()->find($username);
+        $user = $provider->search()->findBy('samaccountname', $username);
         if (! $user) {
             if ($this->logger)
                 $this->logger->info("User not found");
