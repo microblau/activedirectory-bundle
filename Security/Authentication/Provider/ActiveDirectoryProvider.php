@@ -21,6 +21,7 @@ use eZ\Publish\Core\MVC\Symfony\Security\InteractiveLoginToken;
 use eZ\Publish\Core\MVC\Symfony\Security\UserWrapped;
 use eZ\Publish\Core\Repository\Values\User\UserReference;
 use Xrow\ActiveDirectoryBundle\RemoteIDGenerator;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 
 class ActiveDirectoryProvider extends RepositoryAuthenticationProvider implements AuthenticationProviderInterface
 {
@@ -50,6 +51,19 @@ class ActiveDirectoryProvider extends RepositoryAuthenticationProvider implement
     public function setClient(Client $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * Injects the ConfigResolver to potentially override default_target_path for redirections after authentication success.
+     *
+     * @param ConfigResolverInterface $configResolver
+     */
+    public function setConfigResolver(ConfigResolverInterface $configResolver)
+    {
+        $defaultPage = $configResolver->getParameter('default_page');
+        if ($defaultPage !== null) {
+            $this->options['default_target_path'] = $defaultPage;
+        }
     }
 
     public function __construct(UserProviderInterface $userProvider)
