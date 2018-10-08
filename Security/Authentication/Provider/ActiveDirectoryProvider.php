@@ -12,6 +12,7 @@ use Assetic\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Ldap\LdapClient;
 use Xrow\ActiveDirectoryBundle\Adapter\LDAP\Client;
 use Xrow\ActiveDirectoryBundle\Security\User\RemoteUserHandlerInterface;
@@ -76,7 +77,7 @@ class ActiveDirectoryProvider extends RepositoryAuthenticationProvider implement
      * @param UsernamePasswordToken $token            
      * @return mixed|UserInterface
      */
-    protected function tryActiveDirectoryImport(UsernamePasswordToken $token)
+    protected function tryActiveDirectoryImport(TokenInterface $token)
     {
         $currentUser = $token->getUser();
         
@@ -205,6 +206,6 @@ class ActiveDirectoryProvider extends RepositoryAuthenticationProvider implement
 
     public function supports(TokenInterface $token)
     {
-        return $token instanceof UsernamePasswordToken;
+        return ($token instanceof UsernamePasswordToken) || ($token instanceof PreAuthenticatedToken);
     }
 }
