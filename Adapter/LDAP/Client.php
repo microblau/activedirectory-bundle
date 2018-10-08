@@ -7,6 +7,7 @@ use Symfony\Component\Ldap\Exception\ConnectionException;
 use Xrow\ActiveDirectoryBundle\Adapter\ActiveDirectory\User;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
+use IDT\GssapiSecurityBundle\Adldap\Connections\ProviderSasl;
 
 /**
  * A 'generic' LDAP Client, driven by configuration.
@@ -42,7 +43,9 @@ class Client implements ClientInterface
             unset( $this->settings['account_prefix'] );
         }
         $this->ldap = new \Adldap\Adldap();
-        $this->ldap->addProvider($this->settings);
+        // Use custom connection provider for Adldap to support Sasl authentication
+        $providerSasl = new ProviderSasl($this->settings);
+        $this->ldap->addProvider($providerSasl);
     }
 
     /**
