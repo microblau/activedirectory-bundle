@@ -1,7 +1,7 @@
 <?php
 namespace Xrow\ActiveDirectoryBundle\Security\User;
 
-use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\Core\SignalSlot\Repository;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\User\User;
